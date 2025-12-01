@@ -1,0 +1,12 @@
+---
+galaxy_info:
+  author: Nemesix
+  description: Vanilla GNOME installation role
+  license: MIT
+  min_ansible_version: 2.10
+  platforms:
+    - name: Ubuntu
+      versions:
+        - all
+
+dependencies: []

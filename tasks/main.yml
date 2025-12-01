@@ -1,0 +1,47 @@
+---
+- name: Ensure required packages are installed
+  apt:
+    name:
+      - wget
+      - gpg
+    state: present
+    update_cache: yes
+  become: true
+
+- name: Add Surface Linux GPG key
+  apt_key:
+    url: "https://raw.githubusercontent.com/linux-surface/linux-surface/master/pkg/keys/surface.asc"
+    state: present
+  become: true
+
+- name: Add Surface Linux repository
+  apt_repository:
+    repo: "deb [arch=amd64] https://pkg.surfacelinux.com/debian release main"
+    state: present
+    filename: "linux-surface"
+  become: true
+
+- name: Update apt cache
+  apt:
+    update_cache: yes
+  become: true
+
+- name: Install Surface kernel and related packages
+  apt:
+    name:
+      - linux-image-surface
+      - linux-headers-surface
+      - libwacom-surface
+      - iptsd
+    state: present
+  become: true
+
+- name: Install SecureBoot MOK package
+  apt:
+    name: linux-surface-secureboot-mok
+    state: present
+  become: true
+
+- name: Update GRUB
+  command: update-grub
+  become: true
